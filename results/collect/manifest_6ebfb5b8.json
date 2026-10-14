@@ -1,0 +1,43 @@
+{
+  "run_id": "6ebfb5b8",
+  "started": "2026-10-13 19:47:59",
+  "argv": [
+    "--split",
+    "all",
+    "--trials",
+    "2",
+    "--concurrency",
+    "8",
+    "--out",
+    "results/collect/rows.jsonl"
+  ],
+  "agent_model": "glm-5.3-flash",
+  "user_model": "glm-5.3-flash",
+  "provider": "anthropic",
+  "split": "all",
+  "trials": 2,
+  "split_seed": 0,
+  "fit_size": 250,
+  "agreement_k": 5,
+  "agreement_temperature": 0.7,
+  "prices_checked": "2026-10-13",
+  "finished": "2026-10-13 23:29:33",
+  "trajectories_run": 1009,
+  "rows_written": 1495,
+  "errors": [],
+  "usage": {
+    "glm-5.3-flash": {
+      "calls": 28519,
+      "prompt": 139165870,
+      "completion": 4197286,
+      "cache_read": 121793280,
+      "usd": 8.358329899999978
+    },
+    "_total_usd": 8.3583,
+    "_cache": {
+      "hits": 14,
+      "misses": 13022,
+      "bypasses": 15498
+    }
+  }
+}

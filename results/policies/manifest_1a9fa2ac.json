@@ -1,0 +1,25 @@
+{
+  "run_id": "1a9fa2ac",
+  "started": "2026-10-14 15:05:22",
+  "argv": [
+    "--policy",
+    "calibrated",
+    "--alphas",
+    "0.10",
+    "--trials",
+    "4",
+    "--concurrency",
+    "4"
+  ],
+  "agent_model": "glm-5.3-flash",
+  "user_model": "glm-5.3-flash",
+  "provider": "openai",
+  "endpoint": "https://api.z.ai/api/paas/v4",
+  "runs": [
+    [
+      "calibrated",
+      0.6677618426331382
+    ]
+  ],
+  "trials": 4
+}

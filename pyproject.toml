@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gate-calibrated"
+version = "0.1.0"
+description = "Calibrated act/ask gate for write actions of tool-using agents, evaluated on tau-bench retail"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+    # tau-bench is not on PyPI; pinned to the commit verified in notes/env_check.md.
+    # On Windows set PYTHONUTF8=1 before installing (its setup.py reads README.md without an encoding).
+    "tau_bench @ git+https://github.com/sierra-research/tau-bench@59a200c6d575d595120f1cb70fea53cef0632f6b",
+    "numpy",  # gate/calibrator.py
+    "matplotlib",  # eval/report.py
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "langgraph"]
+
+[tool.setuptools]
+packages = ["gate", "eval"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

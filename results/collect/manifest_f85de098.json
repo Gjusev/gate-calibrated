@@ -1,0 +1,24 @@
+{
+  "run_id": "f85de098",
+  "started": "2026-10-13 19:26:22",
+  "argv": [
+    "--split",
+    "all",
+    "--trials",
+    "2",
+    "--concurrency",
+    "4",
+    "--out",
+    "results/collect/rows.jsonl"
+  ],
+  "agent_model": "glm-5.3-flash",
+  "user_model": "glm-5.3-flash",
+  "provider": "anthropic",
+  "split": "all",
+  "trials": 2,
+  "split_seed": 0,
+  "fit_size": 250,
+  "agreement_k": 5,
+  "agreement_temperature": 0.7,
+  "prices_checked": "2026-10-13"
+}

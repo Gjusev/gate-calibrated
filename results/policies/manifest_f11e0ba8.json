@@ -1,0 +1,23 @@
+{
+  "run_id": "f11e0ba8",
+  "started": "2026-10-14 11:02:02",
+  "argv": [
+    "--policy",
+    "calibrated",
+    "--alphas",
+    "0.02",
+    "--trials",
+    "4",
+    "--concurrency",
+    "3"
+  ],
+  "agent_model": "glm-5.3-flash",
+  "user_model": "glm-5.3-flash",
+  "runs": [
+    [
+      "calibrated",
+      0.9603057673900065
+    ]
+  ],
+  "trials": 4
+}

@@ -1,0 +1,26 @@
+{
+  "run_id": "da7a7234",
+  "started": "2026-10-13 19:12:40",
+  "argv": [
+    "--split",
+    "fit",
+    "--trials",
+    "1",
+    "--max-tasks",
+    "20",
+    "--concurrency",
+    "3",
+    "--out",
+    "results/collect/rows_flash_pilot.jsonl"
+  ],
+  "agent_model": "glm-5.3-flash",
+  "user_model": "glm-5.3-flash",
+  "provider": "anthropic",
+  "split": "fit",
+  "trials": 1,
+  "split_seed": 0,
+  "fit_size": 250,
+  "agreement_k": 5,
+  "agreement_temperature": 0.7,
+  "prices_checked": "2026-10-13"
+}

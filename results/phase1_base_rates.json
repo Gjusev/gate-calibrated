@@ -1,0 +1,16 @@
+{
+  "gpt-4o": {
+    "trajectories": 460,
+    "gated": 666,
+    "wrong": 199,
+    "rate": 0.2988,
+    "trajs_with_wrong": 148
+  },
+  "sonnet-3.5": {
+    "trajectories": 920,
+    "gated": 1352,
+    "wrong": 284,
+    "rate": 0.2101,
+    "trajs_with_wrong": 227
+  }
+}

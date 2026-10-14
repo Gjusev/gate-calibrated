@@ -1,0 +1,26 @@
+# environments and caches
+.venv/
+.cache/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+vendor/
+
+# run logs (manifests and JSONL rows carry the results and costs)
+results/*.log
+results/collect/*.log
+runs/
+
+# local tooling, previews, private drafts (the LinkedIn post lives in .private/)
+.claude/
+.playwright-mcp/
+.preview/
+.private/
+
+# HyperFrames working files
+brag-output/composition/.hyperframes/
+brag-output/composition/node_modules/
+
+# the rendered film and poster are committed once, under assets/video/
+brag-output/brag.mp4
+brag-output/brag.jpg

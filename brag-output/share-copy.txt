@@ -1,0 +1,1 @@
+gate-calibrated: a barrier between an agent and its write actions. It held its risk targets on tau-bench retail, and showed that a model saying it is 1.00 sure was not enough to tell right from wrong.

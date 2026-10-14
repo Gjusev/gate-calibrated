@@ -1,0 +1,147 @@
+[
+  {
+    "policy": "confirm_all",
+    "lam": null,
+    "label": "confirm_all",
+    "n": 460,
+    "wrong_per_traj": 0.0,
+    "wrong_ci": [
+      0.0,
+      0.0
+    ],
+    "approvals_per_traj": 1.5739,
+    "approvals_ci": [
+      1.3804,
+      1.7674
+    ],
+    "trajs_with_wrong": 0.0,
+    "trajs_with_wrong_ci": [
+      0.0,
+      0.0
+    ],
+    "pass_hat": {
+      "k1": 0.9087,
+      "k2": 0.8696,
+      "k3": 0.8478,
+      "k4": 0.8348
+    },
+    "mean_reward": 0.9087,
+    "rejections_per_traj": 0.1739
+  },
+  {
+    "policy": "fixed_threshold",
+    "lam": null,
+    "label": "fixed_threshold",
+    "n": 460,
+    "wrong_per_traj": 0.0478,
+    "wrong_ci": [
+      0.0196,
+      0.0804
+    ],
+    "approvals_per_traj": 0.9543,
+    "approvals_ci": [
+      0.7761,
+      1.1457
+    ],
+    "trajs_with_wrong": 0.0457,
+    "trajs_with_wrong_ci": [
+      0.0174,
+      0.0783
+    ],
+    "pass_hat": {
+      "k1": 0.8935,
+      "k2": 0.8551,
+      "k3": 0.837,
+      "k4": 0.8261
+    },
+    "mean_reward": 0.8935,
+    "rejections_per_traj": 0.1304
+  },
+  {
+    "policy": "calibrated",
+    "lam": 0.9603057673900065,
+    "label": "calibrated a=0.02 (lam=0.960)",
+    "n": 460,
+    "wrong_per_traj": 0.0174,
+    "wrong_ci": [
+      0.0022,
+      0.037
+    ],
+    "approvals_per_traj": 1.3152,
+    "approvals_ci": [
+      1.1304,
+      1.5022
+    ],
+    "trajs_with_wrong": 0.0174,
+    "trajs_with_wrong_ci": [
+      0.0022,
+      0.037
+    ],
+    "pass_hat": {
+      "k1": 0.8913,
+      "k2": 0.8551,
+      "k3": 0.8326,
+      "k4": 0.8174
+    },
+    "mean_reward": 0.8913,
+    "rejections_per_traj": 0.1826
+  },
+  {
+    "policy": "calibrated",
+    "lam": 0.9136307717940972,
+    "label": "calibrated a=0.05 (lam=0.914)",
+    "n": 460,
+    "wrong_per_traj": 0.037,
+    "wrong_ci": [
+      0.0152,
+      0.0609
+    ],
+    "approvals_per_traj": 0.9652,
+    "approvals_ci": [
+      0.7935,
+      1.15
+    ],
+    "trajs_with_wrong": 0.037,
+    "trajs_with_wrong_ci": [
+      0.0152,
+      0.0609
+    ],
+    "pass_hat": {
+      "k1": 0.8826,
+      "k2": 0.8304,
+      "k3": 0.8,
+      "k4": 0.7826
+    },
+    "mean_reward": 0.8826,
+    "rejections_per_traj": 0.1174
+  },
+  {
+    "policy": "calibrated",
+    "lam": 0.6677618426331382,
+    "label": "calibrated a=0.1/0.2 (lam=0.668)",
+    "n": 460,
+    "wrong_per_traj": 0.0304,
+    "wrong_ci": [
+      0.0087,
+      0.0587
+    ],
+    "approvals_per_traj": 0.9239,
+    "approvals_ci": [
+      0.7478,
+      1.113
+    ],
+    "trajs_with_wrong": 0.0304,
+    "trajs_with_wrong_ci": [
+      0.0087,
+      0.0587
+    ],
+    "pass_hat": {
+      "k1": 0.9065,
+      "k2": 0.8783,
+      "k3": 0.863,
+      "k4": 0.8522
+    },
+    "mean_reward": 0.9065,
+    "rejections_per_traj": 0.1196
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "run_id": "bb4361e0",
+  "started": "2026-10-13 18:39:49",
+  "argv": [
+    "--max-tasks",
+    "2",
+    "--trials",
+    "1",
+    "--concurrency",
+    "2",
+    "--out",
+    "results/collect/smoke_rows.jsonl"
+  ],
+  "agent_model": "glm-5.3",
+  "user_model": "glm-5.3-flash",
+  "provider": "anthropic",
+  "split": "all",
+  "trials": 1,
+  "split_seed": 0,
+  "fit_size": 250,
+  "agreement_k": 5,
+  "agreement_temperature": 0.7,
+  "prices_checked": "2026-10-13",
+  "finished": "2026-10-13 18:42:07",
+  "trajectories_run": 2,
+  "rows_written": 2,
+  "errors": [],
+  "usage": {
+    "_total_usd": 0,
+    "_cache": {
+      "hits": 0,
+      "misses": 0
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "run_id": "9dd24ef7",
+  "started": "2026-10-14 12:49:53",
+  "argv": [
+    "--policy",
+    "calibrated",
+    "--alphas",
+    "0.05",
+    "--trials",
+    "4",
+    "--concurrency",
+    "8"
+  ],
+  "agent_model": "glm-5.3-flash",
+  "user_model": "glm-5.3-flash",
+  "provider": "openai",
+  "endpoint": "https://api.z.ai/api/paas/v4",
+  "runs": [
+    [
+      "calibrated",
+      0.9136307717940972
+    ]
+  ],
+  "trials": 4,
+  "finished": "2026-10-14 14:55:37",
+  "trajectories_run": 385,
+  "errors": [],
+  "usage": {
+    "glm-5.3-flash": {
+      "calls": 12032,
+      "prompt": 66901267,
+      "completion": 2320461,
+      "cache_read": 0,
+      "usd": 11.19542055000001
+    },
+    "_total_usd": 11.1954,
+    "_cache": {
+      "hits": 77,
+      "misses": 5918,
+      "bypasses": 6114
+    }
+  }
+}

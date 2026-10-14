@@ -1,0 +1,34 @@
+{
+  "run_id": "36b9c338",
+  "started": "2026-10-14 12:49:53",
+  "argv": [
+    "--policy",
+    "confirm_all",
+    "--trials",
+    "4",
+    "--concurrency",
+    "4"
+  ],
+  "agent_model": "glm-5.3-flash",
+  "user_model": "glm-5.3-flash",
+  "provider": "openai",
+  "endpoint": "https://api.z.ai/api/paas/v4",
+  "runs": [
+    [
+      "confirm_all",
+      null
+    ]
+  ],
+  "trials": 4,
+  "finished": "2026-10-14 12:49:53",
+  "trajectories_run": 0,
+  "errors": [],
+  "usage": {
+    "_total_usd": 0,
+    "_cache": {
+      "hits": 0,
+      "misses": 0,
+      "bypasses": 0
+    }
+  }
+}
