@@ -1,6 +1,6 @@
 # gate-calibrated results
 
-Endpoint: regular z.ai API (OpenAI-compatible, api/paas/v4). Agent and simulated user: glm-5.3-flash. Oracle: perfect (gold actions). Test split, 115 tasks x 4 trials per configuration where complete. Full configs in the run manifests.
+Endpoint: z.ai API (OpenAI-compatible endpoint). Agent and simulated user: glm-5.3-flash. Oracle: perfect (gold actions). Test split, 115 tasks x 4 trials per configuration where complete. Full configs in the run manifests.
 
 ## Headline: wrong writes executed vs approvals requested
 
@@ -42,10 +42,3 @@ Chosen for the live run: B_logistic_regression (lowest Brier on cal).
 | 0.05 | 0.9136 | 1.01 |
 | 0.1 | 0.6678 | 0.95 |
 | 0.2 | 0.6678 | 0.95 |
-
-## Endpoint check: configurations run in full on both endpoints
-
-| policy | endpoint | wrong writes/traj | approvals/traj | pass^1 | pass^4 |
-|---|---|---|---|---|---|
-| confirm_all | regular | 0.000 | 1.57 [1.38, 1.77] | 0.909 | 0.835 |
-| confirm_all | coding plan | 0.000 | 1.61 [1.42, 1.80] | 0.891 | 0.809 |

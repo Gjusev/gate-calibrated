@@ -1,12 +1,12 @@
 # AI review
 
-This project was built by an AI agent (Claude), coordinated and reviewed by Youssef, with a second Claude session as implementer during the last stretch and independent read-only subagents for verification. This file summarizes what the AI got wrong, how each case was caught, and what changed as a result. The full record, with dates and numbers, is `notes/ai_review_log.md` (14 cases).
+This project was built by an AI agent (Claude), coordinated and reviewed by Youssef, with a second Claude session as implementer during the last stretch and independent read-only subagents for verification. This file summarizes what the AI got wrong, how each case was caught, and what changed as a result. The full record, with dates and numbers, is `notes/ai_review_log.md` (15 cases).
 
 Written on 2026-10-14 by the implementing agent at Youssef's request. Status: not yet reviewed line by line by Youssef.
 
 ## What went wrong, by kind
 
-**Results stated more strongly than the data allowed** (cases 12 and 13). The most consequential kind. A README draft presented the gap between two policies that behave identically as a one-third reduction in wrong writes, and called noise a gain in task success. The cost table mixed two endpoints and presented an extrapolation as a measurement. Both were caught by review against the raw data: a coordinating session that checked the claim against the Phase 4 analysis, and a read-only subagent that recomputed every README number from the rows and manifests.
+**Results stated more strongly than the data allowed** (cases 12, 13 and 15). The most consequential kind. A README draft presented the gap between two policies that behave identically as a one-third reduction in wrong writes, and called noise a gain in task success. The cost table mixed two endpoints and presented an extrapolation as a measurement. Both were caught by review against the raw data: a coordinating session that checked the claim against the Phase 4 analysis, and a read-only subagent that recomputed every README number from the rows and manifests.
 
 **Experimental design confounded by an operational change** (case 10). Switching the API endpoint mid-run, after a weak equivalence check, tied endpoint to task order. Fixed by rerunning every configuration in full on one endpoint, and by recording the endpoint on every result row.
 

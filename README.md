@@ -46,7 +46,7 @@ The headline measurement is a curve: wrong writes executed without approval per 
 
 ### Live evaluation
 
-Test split, 115 tasks x 4 trials = 460 trajectories per configuration, agent and simulated user glm-5.3-flash, perfect oracle, regular z.ai API. Brackets are bootstrap 95% CIs over tasks. Full tables in `results/report.md`, plot in `results/curve.png`.
+Test split, 115 tasks x 4 trials = 460 trajectories per configuration, agent and simulated user glm-5.3-flash, perfect oracle, z.ai API (OpenAI-compatible endpoint). Brackets are bootstrap 95% CIs over tasks. Full tables in `results/report.md`, plot in `results/curve.png`.
 
 | policy | trajectories with an executed wrong write | wrong writes/traj | approvals/traj |
 |---|---|---|---|
@@ -76,7 +76,7 @@ Task success (pass^k, unbiased estimator: probability that k independent trials 
 | calibrated, alpha 0.05 | 0.883 | 0.783 |
 | calibrated, alpha 0.10 and 0.20 | 0.906 | 0.852 |
 
-Most gaps here are within noise: the two equivalent policies differ by 0.013 on pass^1 and 0.026 on pass^4, and confirm_all differs by 0.018 on pass^1 between the two endpoints (`results/report_coding_plan.md`). One gap is larger: calibrated at alpha 0.05 is 0.070 below the lambda 0.668 run on pass^4 (paired task bootstrap CI [-0.130, -0.017], not corrected for the roughly ten comparisons in this table). Since that policy differs from the lambda 0.668 one on only about 11% of write steps, this is more likely noise than an effect of asking, but the data cannot rule an effect out.
+Most gaps here are within noise: the two equivalent policies differ by 0.013 on pass^1 and 0.026 on pass^4. One gap is larger: calibrated at alpha 0.05 is 0.070 below the lambda 0.668 run on pass^4 (paired task bootstrap CI [-0.130, -0.017], not corrected for the roughly ten comparisons in this table). Since that policy differs from the lambda 0.668 one on only about 11% of write steps, this is more likely noise than an effect of asking, but the data cannot rule an effect out.
 
 ### Signals and calibration
 
@@ -162,12 +162,12 @@ python -m eval.run_policies --policy calibrated --trials 4 --concurrency 4
 python -m eval.report
 ```
 
-Models and endpoint come from environment variables (`GATE_AGENT_MODEL`, `GATE_USER_MODEL`, `GATE_MODEL_PROVIDER`); keys are never written to a file. The runs here used two z.ai endpoints:
+Models and endpoint come from environment variables (`GATE_AGENT_MODEL`, `GATE_USER_MODEL`, `GATE_MODEL_PROVIDER`); keys are never written to a file. The runs here used two z.ai API endpoints:
 
 ```bash
 # Phase 2 collection (Anthropic-compatible endpoint, the default provider)
 export ANTHROPIC_BASE_URL=https://api.z.ai/api/anthropic ANTHROPIC_AUTH_TOKEN=<z.ai key>
-# Phase 6 main run (regular OpenAI-compatible API)
+# Phase 6 live evaluation (OpenAI-compatible endpoint)
 export GATE_MODEL_PROVIDER=openai OPENAI_API_BASE=https://api.z.ai/api/paas/v4 OPENAI_API_KEY=<z.ai key>
 ```
 
@@ -192,13 +192,12 @@ The LangGraph integration is `gate_node` in `gate/middleware.py`, with a runnabl
 
 ## Cost
 
-USD at z.ai list prices of 2026-10-13 (glm-5.3-flash $0.15 / $0.50 per million input / output tokens), computed from the token counts in the run manifests. Runs on the coding-plan endpoint were billed as a flat-rate subscription, so their figures are list-price equivalents, not money spent.
+USD at z.ai list prices of 2026-10-13 (glm-5.3-flash $0.15 / $0.50 per million input / output tokens), computed from the token counts in the run manifests.
 
-| run | endpoint | trajectories | cost |
-|---|---|---|---|
-| Phase 2 collection (signals on every gated step) | coding plan | 1040 | $8.36 measured for 1009; about $8.6 for all 1040, extrapolated (the initial 31 have no usage record) |
-| Phase 6, all five configurations | regular API | 2300 | $57.16 measured for 2158; 142 more come from five processes stopped when the account balance ran out, with no usage record (about $3 to $4 at the same rate) |
-| Phase 6 partial run (confirm_all 460, fixed_threshold 369, calibrated 250) | coding plan | 1179 | flat rate; reported separately in `results/report_coding_plan.md` |
+| run | trajectories | cost |
+|---|---|---|
+| Phase 2 collection (signals on every gated step) | 1040 | $8.36 measured for 1009; about $8.6 for all 1040, extrapolated (the initial 31 have no usage record) |
+| Phase 6 live evaluation, all five configurations | 2300 | $57.16 measured for 2158; 142 more come from five processes stopped when the account balance ran out, with no usage record (about $3 to $4 at the same rate) |
 
 The calibrated configurations cost more than confirm_all ($6.67 measured for 408 confirm_all trajectories) because they compute the signals on every gated step, and agreement sampling at temperature 0.7 is never cached.
 
@@ -211,7 +210,7 @@ The calibrated configurations cost more than confirm_all ($6.67 measured for 408
 - Labeling compares against gold actions: an action that is valid but different from gold counts as wrong.
 - Verbalized confidence and self-agreement are saturated for glm-5.3-flash (and, in a 20-task pilot, for glm-5.3). With these signals the gate cannot separate right from wrong writes by confidence; a model or signal with real spread could change the outcome, and that is not tested here.
 - Irreversible actions always ask under every policy, and they are most gated steps (986 of 1535 collected), so most approvals are the same across policies and the policies differ only on write-tier steps.
-- The calibrator was fit on ungated trajectories from the train and dev splits, collected on the Anthropic-compatible z.ai endpoint; the live run used the regular z.ai API. A temperature-0 check on 30 real conversation prefixes found cross-endpoint agreement (18 and 15 of 30) within same-endpoint repeat agreement (14 of 30), and confirm_all had 0 executed wrong writes on both endpoints (pass^1 0.909 against 0.891), but this is not a proof of identical serving.
+- The calibrator was fit on ungated trajectories from the train and dev splits, collected through z.ai's Anthropic-compatible API; the live evaluation used z.ai's OpenAI-compatible API for the same model. A temperature-0 check on 30 real conversation prefixes found cross-endpoint agreement (18 and 15 of 30) within same-endpoint repeat agreement (14 of 30), which is not a proof of identical serving.
 - Results are for one agent model and one set of seeds.
 
 ## Credits

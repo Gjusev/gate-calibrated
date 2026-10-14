@@ -22,10 +22,8 @@ FIT_SIZE = 250  # fit = first 250 shuffled train indices; cal = rest + dev
 AGENT_MODEL = os.environ.get("GATE_AGENT_MODEL", "glm-5.3-flash")
 USER_MODEL = os.environ.get("GATE_USER_MODEL", "glm-5.3-flash")
 PROVIDER = os.environ.get("GATE_MODEL_PROVIDER", "anthropic")
-# Endpoint actually used, recorded in every result row. Phase 2 and the
-# start of Phase 6 used the z.ai coding-plan Anthropic endpoint; the rest
-# of Phase 6 used the regular z.ai API (OpenAI-compatible), after a
-# temperature-0 equivalence check (notes/progress.md, Phase 6).
+# Endpoint actually used, recorded in every Phase 6 result row. Phase 2 used
+# z.ai's Anthropic-compatible API; Phase 6 used z.ai's OpenAI-compatible API.
 ENDPOINT = (
     os.environ.get("OPENAI_API_BASE") if PROVIDER == "openai"
     else os.environ.get("ANTHROPIC_BASE_URL")

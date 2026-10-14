@@ -20,7 +20,7 @@ Written on 2026-10-14 by the implementing agent (Claude) at Youssef's request, f
 - **No spending cap.** Youssef, 2026-10-13: "no escatimes en tokens ni nada". `MAX_USD` stays at 1000 as a guard against a runaway loop, not as a budget.
 - **Agent and simulated user: glm-5.3-flash**, through z.ai. In 20-task pilots glm-5.3 erred on 4% of gated actions (too few positives to fit a calibrator) and glm-5.3-flash on about 12%, at a tenth of the price. The signals were saturated for both.
 - **Signals use the agent's own model**, as the plan specifies.
-- **Phase 2 ran on the z.ai coding-plan endpoint; the main Phase 6 run used the regular z.ai API** for all five policy configurations, after a temperature-0 equivalence check. The partial coding-plan Phase 6 run is kept and reported separately. Youssef suggested the regular API for its rate limits.
+- **Phase 2 used z.ai's Anthropic-compatible API; the Phase 6 live evaluation used z.ai's OpenAI-compatible API** for all five policy configurations, after a temperature-0 equivalence check. Youssef suggested the OpenAI-compatible endpoint for its rate limits. An earlier partial Phase 6 run on the other endpoint was archived outside the repository, so every evaluation number comes from one endpoint.
 - **Pilot data collected before the labeling fixes was archived, not mixed in.**
 
 ## Method

@@ -1,14 +1,12 @@
 """Phase 7: final report from cached runs.
 
-Reads results/policies/rows.jsonl (per-trajectory policy outcomes) and
-results/calibration.json, and writes into results/, one set per endpoint:
-  - curve*.png / curve*.json: executed wrong writes per trajectory vs
-    approvals per trajectory, one point per policy configuration, with
-    bootstrap 95% CIs over tasks (plan section 4.8, headline result)
-  - report*.md: headline table, calibration and threshold tables, pass^k
-The main report (no suffix) is the regular z.ai API run, where every
-configuration has its full 460 trajectories. The coding-plan endpoint run
-is reported separately (suffix _coding_plan) and compared on confirm_all.
+Reads results/policies/rows.jsonl (per-trajectory policy outcomes, z.ai API,
+OpenAI-compatible endpoint) and results/calibration.json, and writes into
+results/:
+  - curve.png / curve.json: executed wrong writes per trajectory vs approvals
+    per trajectory, one point per policy configuration, with bootstrap 95%
+    CIs over tasks (plan section 4.8, headline result)
+  - report.md: headline table, pass^k, calibration and threshold tables
 
 Usage:
     python -m eval.report
@@ -27,12 +25,6 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 OUT = "results"
-CODING_PLAN = "https://api.z.ai/api/anthropic"
-REGULAR = "https://api.z.ai/api/paas/v4"
-ENDPOINTS = [
-    ("", REGULAR, "regular z.ai API (OpenAI-compatible, api/paas/v4)"),
-    ("_coding_plan", CODING_PLAN, "z.ai coding-plan endpoint (Anthropic-compatible)"),
-]
 
 
 def load_policy_rows(path):
@@ -48,8 +40,7 @@ def load_policy_rows(path):
                 continue
             if r.get("kind") != "traj_done":
                 continue
-            r["endpoint"] = r.get("endpoint") or CODING_PLAN
-            key = (r["policy"], r.get("lam"), r["task_id"], r["trial"], r["endpoint"])
+            key = (r["policy"], r.get("lam"), r["task_id"], r["trial"], r.get("endpoint"))
             if key in seen:
                 dup += 1
                 continue
@@ -148,7 +139,7 @@ def plot(curve, path, title):
 
 def render(curve, cal, endpoint_desc, suffix, extra=()):
     lines = [
-        "# gate-calibrated results" + ("" if not suffix else f" ({suffix.strip('_').replace('_', ' ')})"),
+        "# gate-calibrated results",
         "",
         f"Endpoint: {endpoint_desc}. Agent and simulated user: glm-5.3-flash. "
         "Oracle: perfect (gold actions). Test split, 115 tasks x 4 trials per "
@@ -207,49 +198,15 @@ def main():
     cal = json.load(open(os.path.join(OUT, "calibration.json"), encoding="utf-8"))
     if not rows:
         raise SystemExit("no policy rows; run Phase 6 first")
-
-    curves = {}
-    for suffix, endpoint, _ in ENDPOINTS:
-        sub = [r for r in rows if r["endpoint"] == endpoint]
-        if sub:
-            curves[suffix] = build_curve(sub, cal)
-
-    # endpoint comparison on configurations complete on both endpoints
-    extra = []
-    if "" in curves and "_coding_plan" in curves:
-        both = {
-            c["label"]: c for c in curves["_coding_plan"] if c["n"] == 460
-        }
-        pairs = [(c, both[c["label"]]) for c in curves[""] if c["label"] in both and c["n"] == 460]
-        if pairs:
-            extra += [
-                "",
-                "## Endpoint check: configurations run in full on both endpoints",
-                "",
-                "| policy | endpoint | wrong writes/traj | approvals/traj | pass^1 | pass^4 |",
-                "|---|---|---|---|---|---|",
-            ]
-            for reg, cp in pairs:
-                for name, c in (("regular", reg), ("coding plan", cp)):
-                    extra.append(
-                        f"| {c['label']} | {name} | {c['wrong_per_traj']:.3f} | "
-                        f"{c['approvals_per_traj']:.2f} [{c['approvals_ci'][0]:.2f}, {c['approvals_ci'][1]:.2f}] | "
-                        f"{c['pass_hat']['k1']:.3f} | {c['pass_hat']['k4']:.3f} |"
-                    )
-
-    for suffix, endpoint, desc in ENDPOINTS:
-        if suffix not in curves:
-            continue
-        curve = curves[suffix]
-        plot(curve, os.path.join(OUT, f"curve{suffix}.png"),
-             "gate policies on tau-bench retail (test split)"
-             + ("" if not suffix else ", coding-plan endpoint"))
-        with open(os.path.join(OUT, f"curve{suffix}.json"), "w", encoding="utf-8") as f:
-            json.dump(curve, f, indent=2)
-        lines = render(curve, cal, desc, suffix, extra if suffix == "" else ())
-        if suffix == "":
-            print("\n".join(lines))
-    print("\nwrote results/report*.md, curve*.png, curve*.json")
+    curve = build_curve(rows, cal)
+    plot(curve, os.path.join(OUT, "curve.png"),
+         "gate policies on tau-bench retail (test split)")
+    with open(os.path.join(OUT, "curve.json"), "w", encoding="utf-8") as f:
+        json.dump(curve, f, indent=2)
+    lines = render(curve, cal, "z.ai API (OpenAI-compatible endpoint)", "")
+    print(chr(10).join(lines))
+    print()
+    print("wrote results/report.md, curve.png, curve.json")
 
 
 if __name__ == "__main__":

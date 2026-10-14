@@ -27,8 +27,8 @@ from gate.middleware import TauGateAgent
 from gate.policy import make_policy
 
 OUT_DIR = os.path.join("results", "policies")
-# endpoint of rows written before the field existed
-CODING_PLAN_ENDPOINT = "https://api.z.ai/api/anthropic"
+# endpoint assumed for rows without the field (the Anthropic-compatible default)
+DEFAULT_ENDPOINT = "https://api.z.ai/api/anthropic"
 _write_lock = __import__("threading").Lock()
 
 
@@ -141,14 +141,14 @@ def main():
 
     # resume: (policy, lam, task_id, trial), per endpoint: runs on a
     # different endpoint do not count as done (rows without the field come
-    # from the coding-plan endpoint, before it was recorded)
+    # from the default Anthropic-compatible endpoint)
     done = set()
     if os.path.exists(out):
         with open(out, encoding="utf-8") as f:
             for line in f:
                 try:
                     r = json.loads(line)
-                    if (r.get("endpoint") or CODING_PLAN_ENDPOINT) != (config.ENDPOINT or CODING_PLAN_ENDPOINT):
+                    if (r.get("endpoint") or DEFAULT_ENDPOINT) != (config.ENDPOINT or DEFAULT_ENDPOINT):
                         continue
                     done.add((r["policy"], r.get("lam"), r["task_id"], r["trial"]))
                 except Exception:
